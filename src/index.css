@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #0d0d0d;
+  color: white;
+  font-family: "Barlow", sans-serif;
+}
+
+.headline-font {
+  font-family: "Barlow Condensed", sans-serif;
+}
