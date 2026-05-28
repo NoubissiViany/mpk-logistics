@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Quote() {
     const [formData, setFormData] = useState({
@@ -20,22 +20,42 @@ export default function Quote() {
         })
     }
 
+    // AUTO HIDE SUCCESS / ERROR MESSAGES
+
+    useEffect(() => {
+        if (success || error) {
+            const timer = setTimeout(() => {
+                setSuccess(false)
+                setError('')
+            }, 4000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [success, error])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        // PREVENT DOUBLE SUBMIT
+
+        if (loading) return
 
         setLoading(true)
         setError('')
         setSuccess(false)
 
         try {
-            const response = await fetch('https://formspree.io/f/mdajyyqk', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify(formData),
-            })
+            const response = await fetch(
+                'https://formspree.io/f/mdajyyqk',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                }
+            )
 
             if (response.ok) {
                 setSuccess(true)
@@ -48,13 +68,15 @@ export default function Quote() {
                     freightDetails: '',
                 })
             } else {
-                setError('Something went wrong. Please try again.')
+                setError(
+                    'Something went wrong. Please try again.'
+                )
             }
         } catch {
             setError('Network error. Please try again.')
+        } finally {
+            setLoading(false)
         }
-
-        setLoading(false)
     }
 
     return (
@@ -127,7 +149,8 @@ export default function Quote() {
                                     onChange={handleChange}
                                     placeholder="Full Name"
                                     required
-                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B]"
+                                    disabled={loading}
+                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B] disabled:opacity-50"
                                 />
 
                                 <input
@@ -136,7 +159,8 @@ export default function Quote() {
                                     value={formData.company}
                                     onChange={handleChange}
                                     placeholder="Company"
-                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B]"
+                                    disabled={loading}
+                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B] disabled:opacity-50"
                                 />
 
                             </div>
@@ -150,7 +174,8 @@ export default function Quote() {
                                     onChange={handleChange}
                                     placeholder="Email Address"
                                     required
-                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B]"
+                                    disabled={loading}
+                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B] disabled:opacity-50"
                                 />
 
                                 <input
@@ -160,7 +185,8 @@ export default function Quote() {
                                     onChange={handleChange}
                                     placeholder="Phone Number"
                                     required
-                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B]"
+                                    disabled={loading}
+                                    className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B] disabled:opacity-50"
                                 />
 
                             </div>
@@ -172,33 +198,52 @@ export default function Quote() {
                                 onChange={handleChange}
                                 placeholder="Freight Details"
                                 required
-                                className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B]"
+                                disabled={loading}
+                                className="w-full bg-[#0d0d0d] border border-[#2a2a2a] px-4 py-4 text-white outline-none focus:border-[#C0392B] disabled:opacity-50"
                             ></textarea>
 
                             {/* SUCCESS MESSAGE */}
 
-                            {success && (
+                            <div
+                                className={`transition-all duration-300 overflow-hidden ${success
+                                        ? 'max-h-40 opacity-100'
+                                        : 'max-h-0 opacity-0'
+                                    }`}
+                            >
                                 <div className="bg-green-600/20 border border-green-500 text-green-400 p-4">
                                     Your quote request has been sent successfully.
                                 </div>
-                            )}
+                            </div>
 
                             {/* ERROR MESSAGE */}
 
-                            {error && (
+                            <div
+                                className={`transition-all duration-300 overflow-hidden ${error
+                                        ? 'max-h-40 opacity-100'
+                                        : 'max-h-0 opacity-0'
+                                    }`}
+                            >
                                 <div className="bg-red-600/20 border border-red-500 text-red-400 p-4">
                                     {error}
                                 </div>
-                            )}
+                            </div>
 
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-[#C0392B] hover:bg-[#a93226] transition-colors py-5 uppercase tracking-widest font-semibold disabled:opacity-50"
+                                className="w-full bg-[#C0392B] hover:bg-[#a93226] transition-all duration-300 py-4 uppercase tracking-widest font-semibold disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                             >
-                                {loading
-                                    ? 'Sending...'
-                                    : 'Request a Free Quote'}
+
+                                {loading && (
+                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                )}
+
+                                <span>
+                                    {loading
+                                        ? 'Sending...'
+                                        : 'Request a Free Quote'}
+                                </span>
+
                             </button>
 
                         </form>
