@@ -206,8 +206,8 @@ export default function Quote() {
 
                             <div
                                 className={`transition-all duration-300 overflow-hidden ${success
-                                        ? 'max-h-40 opacity-100'
-                                        : 'max-h-0 opacity-0'
+                                    ? 'max-h-40 opacity-100'
+                                    : 'max-h-0 opacity-0'
                                     }`}
                             >
                                 <div className="bg-green-600/20 border border-green-500 text-green-400 p-4">
@@ -219,8 +219,8 @@ export default function Quote() {
 
                             <div
                                 className={`transition-all duration-300 overflow-hidden ${error
-                                        ? 'max-h-40 opacity-100'
-                                        : 'max-h-0 opacity-0'
+                                    ? 'max-h-40 opacity-100'
+                                    : 'max-h-0 opacity-0'
                                     }`}
                             >
                                 <div className="bg-red-600/20 border border-red-500 text-red-400 p-4">
