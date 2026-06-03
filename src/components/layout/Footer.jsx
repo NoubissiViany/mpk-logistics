@@ -7,10 +7,10 @@ export default function Footer() {
             className="border-t border-[#1B3A6B] bg-[#090909] py-10"
         >
 
-            <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="max-w-7xl mx-auto px-6 flex lg:flex-row items-center justify-between gap-8">
 
                 {/* Logo + Copyright */}
-                <div className="flex items-center gap-4">
+                <div className="flex justify-center mx-auto items-center gap-4">
 
                     <a
                         href="/"
@@ -34,7 +34,7 @@ export default function Footer() {
 
                 {/* Navigation */}
                 <nav
-                    className="flex flex-wrap justify-center items-center gap-6 uppercase tracking-widest text-sm"
+                    className="hidden lg:flex flex-wrap justify-center items-center gap-6 uppercase tracking-widest text-sm"
                     aria-label="Footer navigation"
                 >
 
