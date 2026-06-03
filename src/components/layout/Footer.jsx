@@ -34,7 +34,7 @@ export default function Footer() {
 
                 {/* Navigation */}
                 <nav
-                    className="flex flex-wrap items-center gap-6 uppercase tracking-widest text-sm"
+                    className="flex flex-wrap justify-center items-center gap-6 uppercase tracking-widest text-sm"
                     aria-label="Footer navigation"
                 >
 
