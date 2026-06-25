@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto px-6 flex lg:flex-row items-center justify-between gap-8">
 
                 {/* Logo + Copyright */}
-                <div className="flex justify-center mx-auto items-center gap-4">
+                <div className="flex justify-center mx-auto lg:mx-0 items-center gap-4">
 
                     <a
                         href="/"
